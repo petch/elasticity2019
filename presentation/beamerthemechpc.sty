@@ -1,0 +1,73 @@
+\ProvidesPackage{beamerthemecphc}
+
+% Цвета
+\definecolor{ColorDark}{RGB}{12,52,94}
+\definecolor{ColorLight}{RGB}{193,207,215}
+\definecolor{ColorItem}{RGB}{255,108,0}
+
+% Задание цветов
+\setbeamercolor{item}{fg=ColorItem}
+\setbeamercolor{title}{fg=black}
+\setbeamercolor{footline}{bg=ColorDark,fg=white}
+\setbeamercolor{headline}{bg=ColorDark,fg=white}
+\setbeamercolor{frametitle}{fg=black,bg=ColorLight}
+
+% Расположение текста
+\setbeamersize{text margin left=20pt,text margin right=20pt}
+
+% Пустая навигация
+\setbeamertemplate{navigation symbols}{}
+
+% Списки
+\setbeamertemplate{itemize items}[square]
+\setbeamertemplate{enumerate items}[square]
+
+% Заголовок слайда
+\setbeamertemplate{frametitle}{
+	\nointerlineskip
+	\begin{beamercolorbox}[wd=\paperwidth,center,sep=10pt]{frametitle}
+		\insertsubsection
+		\insertframetitle
+	\end{beamercolorbox}
+}
+
+% Колонтитулы слайда
+\setbeamertemplate{headline}{
+	\begin{beamercolorbox}[wd=\paperwidth,ht=9pt,sep=2pt,leftskip=2pt,rightskip=2pt]{headline}
+		\insertinstitute
+		\hfill 
+		\insertauthor
+	\end{beamercolorbox}
+}
+\setbeamertemplate{footline}{
+	\begin{beamercolorbox}[wd=\paperwidth,ht=9pt,sep=1pt,leftskip=2pt,rightskip=2pt]{footline}
+		\insertsection
+		\hfill 
+		\insertframenumber/\inserttotalframenumber
+	\end{beamercolorbox}
+}
+
+% Титульная страница
+\addtobeamertemplate{title page}{}{}{}
+
+% Автодобавление заголовка слайда
+\makeatletter
+  \CheckCommand*\beamer@checkframetitle{\@ifnextchar\bgroup\beamer@inlineframetitle{}}
+  \renewcommand*\beamer@checkframetitle{\global\let\beamer@frametitle\relax\@ifnextchar\bgroup\beamer@inlineframetitle{}}
+\makeatother
+
+% Пакеты и настройки
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[english]{babel} 
+\usepackage{movie15}
+\usepackage{amsthm,amsfonts,amsmath,amssymb,amscd,bm}
+\usepackage{listings}
+\lstset{
+  breaklines=true,
+  language=C,
+  basicstyle=\ttfamily,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\itshape\color{white!40!black},
+  stringstyle=\color{green!40!black}
+}
