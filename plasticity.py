@@ -1,4 +1,5 @@
 from fem import *
+from mshr import *
 
 def mises(u, mu, lmd):
     s = sigma(u, mu, lmd)
@@ -32,10 +33,10 @@ def plasticity(path, mesh, domains, bounds, mu, lmd, g, ls='mumps', pc='default'
 if __name__ == '__main__':
     p, m, d, b = fibers(128, 128, 16, 2, 4, 8)
     mu, lmd = lame([20e9, 20e9], [0.3, 0.3])
-    u = fem(p, m, d, b, mu, lmd, Constant([0, -1e5]), 'cg', 'amg')
+    u = fem(p, m, d, b, mu, lmd, Constant([2e5, 0]), 'cg', 'amg')
     s = stress(p, m, d, b, mu, lmd, u)
     XDMFFile(f'{p}mises.xdmf').write(project(mises(u, mu[0], lmd[0]), FunctionSpace(m, 'DG', 0)))
     mup, lmdp = lame([20e9, 10e9], [0.3, 0.3])
-    u = plasticity(p + 'p', m, d, b, mup, lmdp, Constant([0, -1e5]), 'gmres', 'amg')
+    u = plasticity(p + 'p', m, d, b, mup, lmdp, Constant([2e5, 0]), 'gmres', 'amg')
     s = stress(p, m, d, b, mu, lmd, u)
     XDMFFile(f'{p}pmises.xdmf').write(project(mises(u, mu[0], lmd[0]), FunctionSpace(m, 'DG', 0)))
